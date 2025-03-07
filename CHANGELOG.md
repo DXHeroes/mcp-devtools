@@ -1,0 +1,29 @@
+# Changelog
+
+## [0.3.4](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.3...mcp-devtools-v0.3.4) (2025-03-07)
+
+
+### Bug Fixes
+
+* update PNPM action to version 10 in release workflow ([25df8d6](https://github.com/DXHeroes/mcp-devtools/commit/25df8d639d400dbcc967cf7ff31f3780142d8cf9))
+
+## [0.3.3](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.2...mcp-devtools-v0.3.3) (2025-03-07)
+
+
+### Bug Fixes
+
+* simplify PNPM installation in npm publish workflow ([990c1aa](https://github.com/DXHeroes/mcp-devtools/commit/990c1aa5132e77266ff18cc60892ef8892744f23))
+
+## [0.3.2](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.1...mcp-devtools-v0.3.2) (2025-03-07)
+
+
+### Bug Fixes
+
+* make @mcp-devtools/jira package publicly publishable ([42726be](https://github.com/DXHeroes/mcp-devtools/commit/42726be03302f6743b06702e036c12c28f01ec7b))
+
+## [0.3.1](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.0...mcp-devtools-v0.3.1) (2025-03-07)
+
+
+### Bug Fixes
+
+* test ([686ceb7](https://github.com/DXHeroes/mcp-devtools/commit/686ceb7e128e678e89d847611d465cfe825a3d5e))
