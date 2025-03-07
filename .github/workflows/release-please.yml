@@ -1,0 +1,62 @@
+name: Release Please (Beta)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: "mcp-devtools"
+          command: manifest
+          monorepo-tags: true
+          pull-request-title-pattern: "chore: release ${version}"
+          include-v-in-tag: true
+          bootstrap-sha: "HEAD"
+          changelog-types: |
+            [
+              {"type":"feat","section":"Features","hidden":false},
+              {"type":"fix","section":"Bug Fixes","hidden":false},
+              {"type":"chore","section":"Miscellaneous","hidden":false},
+              {"type":"docs","section":"Documentation","hidden":false},
+              {"type":"perf","section":"Performance Improvements","hidden":false},
+              {"type":"refactor","section":"Code Refactoring","hidden":false}
+            ]
+
+      # The following steps only run if a release PR was merged
+      - uses: actions/checkout@v3
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Setup Node.js
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Setup PNPM
+        if: ${{ steps.release.outputs.release_created }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created }}
+        run: pnpm install
+
+      - name: Build packages
+        if: ${{ steps.release.outputs.release_created }}
+        run: pnpm build
+
+      - name: Publish packages
+        if: ${{ steps.release.outputs.release_created }}
+        run: pnpm --filter "@mcp-devtools/*" publish --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

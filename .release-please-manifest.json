@@ -1,0 +1,18 @@
+{
+	"packages": {
+		".": {
+			"release-type": "node",
+			"bump-minor-pre-major": true,
+			"bump-patch-for-minor-pre-major": true,
+			"draft": false,
+			"prerelease": false,
+			"initial-version": "0.1.0"
+		},
+		"packages/jira": {
+			"release-type": "node",
+			"bump-minor-pre-major": true,
+			"bump-patch-for-minor-pre-major": true,
+			"initial-version": "0.1.0"
+		}
+	}
+}

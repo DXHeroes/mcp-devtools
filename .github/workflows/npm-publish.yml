@@ -1,0 +1,91 @@
+name: Publish Packages to NPM
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (patch | minor | major | x.x.x)"
+        required: true
+        default: "patch"
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Configure Git User
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Version and Publish (Manually triggered)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          VERSION=${{ github.event.inputs.version }}
+          if [[ "$VERSION" == "patch" || "$VERSION" == "minor" || "$VERSION" == "major" ]]; then
+            echo "Running version bump: $VERSION"
+            pnpm --filter "@mcp-devtools/*" exec -- npm version $VERSION
+          else
+            echo "Setting explicit version: $VERSION"
+            pnpm --filter "@mcp-devtools/*" exec -- npm version $VERSION --no-git-tag-version
+          fi
+          pnpm --filter "@mcp-devtools/*" publish --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish from Release
+        if: ${{ github.event_name == 'release' }}
+        run: |
+          # Extract version from release tag (e.g., v1.0.0 -> 1.0.0)
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "Publishing version: $VERSION"
+          pnpm --filter "@mcp-devtools/*" exec -- npm version $VERSION --no-git-tag-version
+          pnpm --filter "@mcp-devtools/*" publish --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push version changes
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          git push
+          git push --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
