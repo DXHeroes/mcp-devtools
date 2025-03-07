@@ -61,6 +61,7 @@ This repository uses pnpm workspaces for package management. To get started:
 
    ```bash
    npm install -g pnpm
+
    ```
 
 2. Install dependencies:
