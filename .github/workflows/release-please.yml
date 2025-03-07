@@ -57,6 +57,6 @@ jobs:
 
       - name: Publish packages
         if: ${{ steps.release.outputs.release_created }}
-        run: pnpm --filter "@mcp-devtools/*" publish --access public --tag beta
+        run: pnpm publish -r --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
