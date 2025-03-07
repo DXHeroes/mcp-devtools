@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.3...mcp-devtools-v0.3.4) (2025-03-07)
+
+
+### Bug Fixes
+
+* update PNPM action to version 10 in release workflow ([25df8d6](https://github.com/DXHeroes/mcp-devtools/commit/25df8d639d400dbcc967cf7ff31f3780142d8cf9))
+
 ## [0.3.3](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.2...mcp-devtools-v0.3.3) (2025-03-07)
 
 
