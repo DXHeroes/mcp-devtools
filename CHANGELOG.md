@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.5](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.4...mcp-devtools-v0.3.5) (2025-03-07)
+
+
+### Bug Fixes
+
+* update PNPM version to 10.6.1 in workflows and package.json ([3317452](https://github.com/DXHeroes/mcp-devtools/commit/33174526766f290a6158cd4e9f2454f50370b882))
+
 ## [0.3.4](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.3...mcp-devtools-v0.3.4) (2025-03-07)
 
 
