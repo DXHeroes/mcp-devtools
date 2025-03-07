@@ -1,0 +1,21 @@
+{
+  "name": "mcp-devtools",
+  "version": "0.3.0",
+  "description": "MCP DevTools for Cursor and other IDEs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r watch",
+    "inspector": "pnpm inspector"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.6.1"
+}

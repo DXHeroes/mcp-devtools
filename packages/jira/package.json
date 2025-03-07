@@ -1,0 +1,29 @@
+{
+	"name": "@mcp-devtools/jira",
+	"version": "0.2.0",
+	"description": "Talk to Jira - MCP Server",
+	"private": true,
+	"type": "module",
+	"bin": {
+		"mcp-jira": "./build/index.js"
+	},
+	"files": ["build"],
+	"scripts": {
+		"build": "tsc && node -e \"fs.chmodSync('build/index.js', '755')\"",
+		"prepare": "pnpm run build",
+		"watch": "tsc --watch",
+		"inspector": "npx @modelcontextprotocol/inspector build/index.js"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "1.6.1",
+		"@mcp-devtools/http-client": "workspace:*",
+		"qs": "^6.12.0",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@types/node": "^22.13.9",
+		"@types/qs": "^6.9.14",
+		"@mcp-devtools/typescript-config": "workspace:*",
+		"typescript": "^5.8.2"
+	}
+}

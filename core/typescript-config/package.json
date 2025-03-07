@@ -1,0 +1,15 @@
+{
+	"name": "@mcp-devtools/typescript-config",
+	"version": "0.1.0",
+	"description": "Shared TypeScript configuration for MCP projects",
+	"private": true,
+	"type": "module",
+	"main": "tsconfig.base.json",
+	"files": ["tsconfig.*.json"],
+	"scripts": {
+		"build": "echo 'No build step required'"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.2"
+	}
+}
