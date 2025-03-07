@@ -1,5 +1,5 @@
 {
-	".": "0.3.4",
+	".": "0.3.5",
 	"core/http-client": "0.1.0",
 	"core/typescript-config": "0.1.0",
 	"packages/jira": "0.2.1"
