@@ -1,10 +1,10 @@
 # MCP DevTools
 
-MCP (Model Context Protocol) DevTools is a collection of packages that enable AI assistants like Claude to interact with external tools and services, particularly focusing on Jira integration.
+MCP (Model Context Protocol) DevTools is a collection of packages that enable AI assistants to interact with external tools and services through the Model Context Protocol.
 
 ## Overview
 
-This monorepo contains packages that implement the Model Context Protocol, providing tools that enable AI assistants to access and manipulate data from external services. The primary focus is Jira integration, allowing AI models to create, update, and query Jira tickets directly.
+This monorepo contains packages that implement the Model Context Protocol, providing tools that enable AI assistants to access and manipulate data from external services. While initially offering Jira integration, this repository is designed as a general-purpose collection of MCP tools that will expand over time to support various services and use cases.
 
 ## Packages
 
@@ -31,7 +31,23 @@ mcp-devtools/
 └── pnpm-workspace.yaml     # Workspace configuration
 ```
 
-## Getting Started
+## Using MCP Tools
+
+MCP tools in this repository can be integrated with AI assistants that support the Model Context Protocol. Here's how to use them in different environments:
+
+### Using with Cursor IDE
+
+To use MCP tools with Cursor IDE:
+
+1. Install the desired MCP package locally or globally
+2. Configure the MCP server in Cursor settings
+3. Access the tool functionality directly through the Cursor IDE interface
+
+For specific tool configuration instructions, refer to the README in each package directory.
+
+## Development
+
+### Getting Started
 
 This repository uses pnpm workspaces for package management. To get started:
 
@@ -52,7 +68,7 @@ This repository uses pnpm workspaces for package management. To get started:
    pnpm build
    ```
 
-## Development
+### Development Workflow
 
 For development with auto-rebuild:
 
@@ -60,12 +76,23 @@ For development with auto-rebuild:
 pnpm dev
 ```
 
-## Jira Integration Setup
+### Debugging
 
-To use the Jira MCP server with Claude Desktop, add the server config:
+Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a workspace script:
 
-On MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
+```bash
+pnpm inspector
+```
+
+The Inspector will provide a URL to access debugging tools in your browser.
+
+### Jira Integration Setup
+
+To use the Jira MCP server with Cursor IDE, configure the server in your Cursor settings:
+
+1. Open Cursor IDE
+2. Navigate to Settings (or CTRL+SHIFT+P) > Cursor Settings > MCP
+3. Add a new MCP server with the following configuration:
 
 ```json
 {
@@ -82,16 +109,6 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
   }
 }
 ```
-
-## Debugging
-
-Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a workspace script:
-
-```bash
-pnpm inspector
-```
-
-The Inspector will provide a URL to access debugging tools in your browser.
 
 ## Contributing
 
