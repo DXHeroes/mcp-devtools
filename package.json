@@ -1,6 +1,6 @@
 {
   "name": "mcp-devtools",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "MCP DevTools for Cursor and other IDEs",
   "private": true,
   "type": "module",
