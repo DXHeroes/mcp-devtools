@@ -2,7 +2,7 @@
 	"name": "@mcp-devtools/jira",
 	"version": "0.2.0",
 	"description": "Talk to Jira - MCP Server",
-	"private": true,
+	"private": false,
 	"type": "module",
 	"bin": {
 		"mcp-jira": "./build/index.js"
