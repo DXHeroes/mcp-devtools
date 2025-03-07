@@ -120,4 +120,4 @@ To use the Jira MCP server with Cursor IDE, configure the server in your Cursor 
 
 ## License
 
-Private - MCP DevTools
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
