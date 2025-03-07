@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.2...mcp-devtools-v0.3.3) (2025-03-07)
+
+
+### Bug Fixes
+
+* simplify PNPM installation in npm publish workflow ([990c1aa](https://github.com/DXHeroes/mcp-devtools/commit/990c1aa5132e77266ff18cc60892ef8892744f23))
+
 ## [0.3.2](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.1...mcp-devtools-v0.3.2) (2025-03-07)
 
 
