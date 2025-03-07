@@ -30,19 +30,19 @@ jobs:
             ]
 
       # The following steps only run if a release PR was merged
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Setup Node.js
         if: ${{ steps.release.outputs.release_created }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "18"
           registry-url: "https://registry.npmjs.org"
 
       - name: Setup PNPM
         if: ${{ steps.release.outputs.release_created }}
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: 8
           run_install: false
