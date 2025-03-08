@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.7](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.6...mcp-devtools-v0.3.7) (2025-03-08)
+
+
+### Bug Fixes
+
+* test ([bf4d8c1](https://github.com/DXHeroes/mcp-devtools/commit/bf4d8c1ff5e82f61b0b7faf00b3c742a1888e226))
+
 ## [0.3.6](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.5...mcp-devtools-v0.3.6) (2025-03-08)
 
 
