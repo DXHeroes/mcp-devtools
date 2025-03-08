@@ -13,10 +13,10 @@
 	"scripts": {
 		"build:tsc": "rollup -c",
 		"build:bundle": "pnpm run build:tsc",
-		"build": "pnpm run build:tsc && npm run build:bundle && chmod +x dist/index.js",
+		"build": "pnpm run build:tsc && npm run build:bundle && chmod +x build/index.js",
 		"prepare": "pnpm run build",
 		"watch": "tsc --watch",
-		"inspector": "npx @modelcontextprotocol/inspector dist/index.js"
+		"inspector": "npx @modelcontextprotocol/inspector build/index.js"
 	},
 	"dependencies": {
 		"@mcp-devtools/http-client": "workspace:*",
