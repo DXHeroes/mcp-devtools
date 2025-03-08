@@ -1,6 +1,6 @@
 {
-	".": "0.3.8",
+	".": "0.3.9",
 	"core/http-client": "0.1.2",
 	"core/typescript-config": "0.1.2",
-	"packages/jira": "0.2.3"
+	"packages/jira": "0.2.4"
 }

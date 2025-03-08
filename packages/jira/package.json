@@ -1,6 +1,6 @@
 {
 	"name": "@mcp-devtools/jira",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"description": "Talk to Jira - MCP Server",
 	"private": false,
 	"bin": {
