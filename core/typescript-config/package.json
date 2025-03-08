@@ -1,10 +1,12 @@
 {
 	"name": "@mcp-devtools/typescript-config",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Shared TypeScript configuration for MCP projects",
 	"type": "module",
 	"main": "tsconfig.base.json",
-	"files": ["tsconfig.*.json"],
+	"files": [
+		"tsconfig.*.json"
+	],
 	"scripts": {
 		"build": "echo 'No build step required'"
 	},

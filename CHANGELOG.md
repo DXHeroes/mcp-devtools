@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.6](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.5...mcp-devtools-v0.3.6) (2025-03-08)
+
+
+### Bug Fixes
+
+* update README with Jira MCP server configuration and usage instructions ([4c6d7f5](https://github.com/DXHeroes/mcp-devtools/commit/4c6d7f5dfa33e5e5706c0cc9b980666b808ca4c4))
+
 ## [0.3.5](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.4...mcp-devtools-v0.3.5) (2025-03-07)
 
 
