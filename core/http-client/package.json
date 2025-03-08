@@ -1,6 +1,6 @@
 {
 	"name": "@mcp-devtools/http-client",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Simple HTTP client for MCP servers",
 	"main": "src/index.ts",
 	"types": "src/types.ts",
