@@ -23,20 +23,6 @@ These core packages are for internal use only and are not published to npm.
 
 Only the MCP server packages under the `@mcp-devtools` scope are published to npm.
 
-## Project Structure
-
-```
-mcp-devtools/
-├── core/                   # Infrastructure and utility packages
-│   ├── typescript-config/  # Shared TypeScript configuration
-│   └── http-client/        # HTTP client utilities
-│
-├── packages/               # Functional MCP server packages
-│   └── jira/               # Jira integration MCP server
-├── package.json            # Root package configuration
-└── pnpm-workspace.yaml     # Workspace configuration
-```
-
 ## Using MCP Tools
 
 MCP tools in this repository can be integrated with AI assistants that support the Model Context Protocol. Here's how to use them in different environments:
@@ -45,11 +31,48 @@ MCP tools in this repository can be integrated with AI assistants that support t
 
 To use MCP tools with Cursor IDE:
 
-1. Install the desired MCP package locally or globally
-2. Configure the MCP server in Cursor settings
-3. Access the tool functionality directly through the Cursor IDE interface
+1. Configure the MCP server in Cursor settings
+2. Access the tool functionality directly through the Cursor IDE chat
+
+#### Jira
+
+1. MCP Server Configuration
+
+Go to Cursor Settings > MCP > Add new MCP server
+
+- Server name: `Jira`
+- Type: `command`
+- Command:
+
+```bash
+env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx @mcp-devtools/jira
+```
+
+2. Usage in chat
+
+```bash
+get task [ticket id]
+# example
+get task SCRUM-1
+```
 
 For specific tool configuration instructions, refer to the README in each package directory.
+
+## Project Structure
+
+```
+
+mcp-devtools/
+├── core/ # Infrastructure and utility packages
+│ ├── typescript-config/ # Shared TypeScript configuration
+│ └── http-client/ # HTTP client utilities
+│
+├── packages/ # Functional MCP server packages
+│ └── jira/ # Jira integration MCP server
+├── package.json # Root package configuration
+└── pnpm-workspace.yaml # Workspace configuration
+
+```
 
 ## Development
 
@@ -61,8 +84,9 @@ This repository uses pnpm workspaces for package management. To get started:
 
    ```bash
    npm install -g pnpm
-
    ```
+
+````
 
 2. Install dependencies:
 
@@ -237,3 +261,4 @@ BREAKING CHANGE: The http-client API has been completely redesigned to improve u
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+````
