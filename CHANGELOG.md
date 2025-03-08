@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.9](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.8...mcp-devtools-v0.3.9) (2025-03-08)
+
+
+### Bug Fixes
+
+* **jira:** update build and inspector paths to use 'build' directory ([9e0fde4](https://github.com/DXHeroes/mcp-devtools/commit/9e0fde43dc0220fc7b704443bef914584d02d1b1))
+
 ## [0.3.8](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.7...mcp-devtools-v0.3.8) (2025-03-08)
 
 
