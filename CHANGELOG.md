@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.11](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.10...mcp-devtools-v0.3.11) (2025-03-09)
+
+
+### Features
+
+* add Linear MCP server package for issue management ([0c0d8ce](https://github.com/DXHeroes/mcp-devtools/commit/0c0d8ce4f52296b5e9f6f0fbdb2721cd1677c7c5))
+
+
+### Bug Fixes
+
+* update Linear GraphQL query to use 'id' parameter for issue retrieval ([f33eb06](https://github.com/DXHeroes/mcp-devtools/commit/f33eb064ae5dcb9b01afc7783eb254aa72f4ea3f))
+
 ## [0.3.10](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.9...mcp-devtools-v0.3.10) (2025-03-09)
 
 
