@@ -23,22 +23,41 @@ MCP (Model Context Protocol) DevTools is a collection of packages that enable AI
 
 ## 🚀 Quick Start
 
-To use MCP DevTools with Cursor IDE:
+### Configuration in Cursor IDE
 
-```bash
-# Configure in Cursor settings (recommended)
-# Settings > Cursor Settings > MCP
-# Add a new MCP server with:
-# Name: Jira
-# Type: command
-# Command: env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/jira
+1. Open Cursor Settings → MCP
+2. Click "Add New MCP Server"
+3. Fill in the following details:
+   - **Name**: `Jira`
+   - **Type**: `command`
+   - **Command**:
+     `env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/jira`
+
+> **Required Environment Variables**:
+>
+> - `JIRA_URL`: Your Jira instance URL (e.g., `https://your-company.atlassian.net`)
+> - `JIRA_API_MAIL`: Your Atlassian account email
+> - `JIRA_API_KEY`: Your Atlassian API key ([Create one here](https://id.atlassian.com/manage-profile/security/api-tokens))
+
+### Using Jira Tools
+
+Once configured, you can interact with Jira through natural language commands in Cursor. Examples:
+
+```
+# Fetch a specific ticket
+get ticket SCRUM-123
+
+# Search for tickets
+execute jql "project = SCRUM AND status = 'In Progress'"
+
+# Get ticket details
+read ticket SCRUM-123
+
+# Create a new ticket
+create ticket project=SCRUM summary="Fix login bug" description="Users can't log in" issuetype=Bug
 ```
 
-Once configured, interact with Jira through chat commands:
-
-```
-get task SCRUM-1
-```
+For a complete list of available commands, refer to the [Jira Package Documentation](./packages/jira/README.md).
 
 ## 📖 Documentation
 
