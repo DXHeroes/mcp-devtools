@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.10](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.9...mcp-devtools-v0.3.10) (2025-03-09)
+
+
+### Bug Fixes
+
+* simplify build process and update TypeScript configuration ([0ccaa82](https://github.com/DXHeroes/mcp-devtools/commit/0ccaa82e2446010454d1a6f5563019d404a5a66f))
+
 ## [0.3.9](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.8...mcp-devtools-v0.3.9) (2025-03-08)
 
 
