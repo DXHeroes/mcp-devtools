@@ -1,0 +1,101 @@
+---
+description: Rules for Writing Cursor Rules
+globs: .cursor/rules/*.md
+alwaysApply: true
+---
+
+# Rules for Writing Cursor Rules
+
+This document provides guidelines for creating and maintaining Cursor IDE rules for the MCP DevTools repository.
+
+@url https://docs.cursor.com/context/rules-for-ai
+@file .cursor/rules/repository-structure.md
+@file .cursor/rules/ai-assisted-development.md
+
+## Rule Structure
+
+Each rule file should follow this structure:
+
+````markdown
+---
+description: Brief description of what the rule enforces
+globs: pattern/to/match/files.ts
+alwaysApply: true|false
+---
+
+# Rule Title
+
+Brief introduction to the rule and its purpose.
+
+@file path/to/example/file.ts
+@file path/to/related/rule.md
+@url https://relevant-docs-url.com/
+
+## Sections
+
+Content organized into clear sections with examples.
+
+## Examples
+
+```typescript
+// Code examples demonstrating the rule
+```
+````
+
+## Guidelines
+
+1. **First Guideline**
+
+   - Explanation point 1
+   - Explanation point 2
+
+2. **Second Guideline**
+   - Explanation point 1
+   - Explanation point 2
+
+```
+
+## Frontmatter Requirements
+
+Every rule must include these frontmatter fields:
+
+1. **description**: A concise one-line description of the rule
+2. **globs**: File pattern(s) the rule applies to
+3. **alwaysApply**: Whether the rule should automatically apply
+
+## File References
+
+Rules should reference:
+
+1. **Example Files**: Include `@file` references to real examples in the codebase
+2. **Related Rules**: Link to related rules with `@file` references
+3. **External Documentation**: Link to relevant external documentation with `@url`
+
+## Guidelines for Writing Effective Rules
+
+1. **Be Specific**
+   - Rules should provide clear, actionable guidance
+   - Include real examples from the codebase when possible
+   - Explain both what to do and what to avoid
+
+2. **Organize Content**
+   - Use clear headings and subheadings
+   - Group related information together
+   - Use numbered lists for sequential steps
+   - Use bullet points for related items
+
+3. **Include Code Examples**
+   - Provide complete, working examples
+   - Comment code examples to explain important points
+   - Show both correct and incorrect patterns
+
+4. **Connect with Other Rules**
+   - Reference related rules
+   - Avoid duplicating content across rules
+   - Ensure consistent guidance across all rules
+
+5. **Keep Updated**
+   - Review and update rules when project standards change
+   - Ensure examples remain valid as the codebase evolves
+   - Add new rules as needed for new patterns or technologies
+```

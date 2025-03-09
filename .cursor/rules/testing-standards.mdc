@@ -1,0 +1,99 @@
+---
+description: Testing Standards
+globs: packages/*/src/**/*.test.ts
+alwaysApply: true
+---
+
+# Testing Standards
+
+Follow these standards when writing tests for MCP DevTools packages:
+
+@file packages/_/src/\*\*/_.test.ts
+@file .cursor/rules/typescript-style.md
+
+## Test Structure
+
+```typescript
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  jest,
+} from "@jest/globals";
+import { featureUnderTest } from "../path/to/feature";
+
+describe("Feature Name", () => {
+  // Setup mocks and test fixtures
+  beforeEach(() => {
+    // Setup code
+  });
+
+  afterEach(() => {
+    // Cleanup code
+    jest.resetAllMocks();
+  });
+
+  describe("Specific Functionality", () => {
+    it("should behave as expected in normal conditions", async () => {
+      // Arrange
+      const input = {
+        /* test data */
+      };
+
+      // Act
+      const result = await featureUnderTest(input);
+
+      // Assert
+      expect(result).toEqual(/* expected output */);
+    });
+
+    it("should handle error cases appropriately", async () => {
+      // Arrange
+      const invalidInput = {
+        /* invalid test data */
+      };
+
+      // Act & Assert
+      await expect(featureUnderTest(invalidInput)).rejects.toThrow();
+    });
+  });
+});
+```
+
+## Testing Guidelines
+
+1. **Test Organization**
+
+   - Use descriptive `describe` and `it` blocks
+   - Group related tests together
+   - Follow the Arrange-Act-Assert pattern
+   - Keep tests focused on a single functionality
+
+2. **Mocking**
+
+   - Mock external dependencies
+   - Use jest.mock() for external modules
+   - Create dedicated mock factories for complex objects
+   - Reset mocks between tests
+
+3. **Coverage**
+
+   - Aim for >80% code coverage
+   - Test happy paths and error paths
+   - Include edge cases and boundary conditions
+   - Test asynchronous behavior correctly
+
+4. **Test Data**
+
+   - Use realistic test data
+   - Create helper functions for test data generation
+   - Avoid test data duplication
+   - Keep test data close to tests that use it
+
+5. **Assertions**
+   - Make assertions specific and meaningful
+   - Test return values, side effects, and exceptions
+   - Use appropriate matchers (toEqual, toBeCalledWith, etc.)
+   - Write custom matchers for complex assertions

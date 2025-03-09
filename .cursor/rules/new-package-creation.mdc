@@ -1,0 +1,588 @@
+---
+description: Guidelines for Creating a New MCP Server Package
+globs: packages/**/*
+alwaysApply: false
+---
+
+# Creating a New MCP Server Package
+
+This guide provides a step-by-step process for creating a new MCP server package in the MCP DevTools monorepo.
+
+@url https://docs.cursor.com/context/rules-for-ai
+@file packages/jira/package.json
+@file packages/jira/src/index.ts
+@file .cursor/rules/repository-structure.md
+@file .cursor/rules/mcp-server-implementation.md
+@file .cursor/rules/core-libraries-usage.md
+
+## Step 1: Set Up Package Structure
+
+First, create the basic package structure:
+
+```bash
+# 1. Create package directory
+mkdir -p packages/[service-name]/src/{tools,api,types,utils}
+
+# 2. Create main files
+touch packages/[service-name]/package.json
+touch packages/[service-name]/tsconfig.json
+touch packages/[service-name]/README.md
+touch packages/[service-name]/src/index.ts
+touch packages/[service-name]/src/types/index.ts
+```
+
+## Step 2: Configure Package Files
+
+### package.json
+
+```json
+{
+  "name": "@mcp-devtools/[service-name]",
+  "version": "0.1.0",
+  "description": "MCP server for [service] integration",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write 'src/**/*.ts'"
+  },
+  "files": ["build"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/github-user/mcp-devtools.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^0.1.0",
+    "@modelcontextprotocol/types": "^0.1.0",
+    "@mcp-devtools/core": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
+```
+
+### tsconfig.json
+
+```json
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "build",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.test.ts", "node_modules"]
+}
+```
+
+## Step 3: Implement Basic Server
+
+Create your `src/index.ts` file:
+
+```typescript
+import { createMcpServer } from "@modelcontextprotocol/server";
+import { loadConfig } from "@mcp-devtools/core/config";
+import { logger } from "@mcp-devtools/core/logger";
+
+// Import tool registration functions
+import { registerTool1 } from "./tools/tool1";
+import { registerTool2 } from "./tools/tool2";
+
+// Define config type
+interface ServiceConfig {
+  SERVICE_URL: string;
+  SERVICE_API_KEY: string;
+  DEBUG?: string;
+}
+
+// Load and validate configuration
+const getConfig = (): ServiceConfig => {
+  return loadConfig({
+    requiredVars: ["SERVICE_URL", "SERVICE_API_KEY"],
+    optionalVars: {
+      DEBUG: "false",
+    },
+  }) as ServiceConfig;
+};
+
+// Initialize API client
+import { initApiClient } from "./api/client";
+
+const initServer = async () => {
+  try {
+    // Get config
+    const config = getConfig();
+
+    // Initialize API client
+    const apiClient = initApiClient({
+      baseUrl: config.SERVICE_URL,
+      apiKey: config.SERVICE_API_KEY,
+    });
+
+    // Create MCP server
+    const server = createMcpServer();
+
+    // Register all tools
+    registerTool1(server, apiClient);
+    registerTool2(server, apiClient);
+
+    // Start the server
+    server.start();
+    logger.info("[service-name] MCP server started successfully");
+  } catch (error) {
+    logger.error("Failed to start [service-name] MCP server", { error });
+    process.exit(1);
+  }
+};
+
+// Start the server
+initServer();
+```
+
+## Step 4: Create API Client
+
+Create your `src/api/client.ts` file:
+
+```typescript
+import { httpClient } from "@mcp-devtools/core/http";
+import { logger } from "@mcp-devtools/core/logger";
+
+interface ApiClientConfig {
+  baseUrl: string;
+  apiKey: string;
+}
+
+export interface ApiClient {
+  get: (path: string, options?: any) => Promise<any>;
+  post: (path: string, data: any, options?: any) => Promise<any>;
+  put: (path: string, data: any, options?: any) => Promise<any>;
+  delete: (path: string, options?: any) => Promise<any>;
+}
+
+export const initApiClient = (config: ApiClientConfig): ApiClient => {
+  const headers = {
+    Authorization: `Bearer ${config.apiKey}`,
+    "Content-Type": "application/json",
+  };
+
+  return {
+    get: async (path, options = {}) => {
+      try {
+        const url = `${config.baseUrl}${path}`;
+        return await httpClient.get(url, { ...options, headers });
+      } catch (error) {
+        logger.error(`API GET request failed: ${path}`, { error });
+        throw error;
+      }
+    },
+
+    post: async (path, data, options = {}) => {
+      try {
+        const url = `${config.baseUrl}${path}`;
+        return await httpClient.post(url, data, { ...options, headers });
+      } catch (error) {
+        logger.error(`API POST request failed: ${path}`, { error });
+        throw error;
+      }
+    },
+
+    put: async (path, data, options = {}) => {
+      try {
+        const url = `${config.baseUrl}${path}`;
+        return await httpClient.put(url, data, { ...options, headers });
+      } catch (error) {
+        logger.error(`API PUT request failed: ${path}`, { error });
+        throw error;
+      }
+    },
+
+    delete: async (path, options = {}) => {
+      try {
+        const url = `${config.baseUrl}${path}`;
+        return await httpClient.delete(url, { ...options, headers });
+      } catch (error) {
+        logger.error(`API DELETE request failed: ${path}`, { error });
+        throw error;
+      }
+    },
+  };
+};
+```
+
+## Step 5: Define Types
+
+Create your `src/types/index.ts` file:
+
+```typescript
+// Response types from API
+export interface ApiResponse<T> {
+  data?: T;
+  error?: string;
+  statusCode: number;
+}
+
+// Service-specific types
+export interface ServiceItem {
+  id: string;
+  name: string;
+  // Additional properties
+}
+
+// Tool parameter types
+export interface SearchParams {
+  query: string;
+  maxResults?: number;
+}
+
+export interface CreateParams {
+  name: string;
+  description: string;
+  // Additional parameters
+}
+```
+
+## Step 6: Implement Tools
+
+For each tool, create a file in the `tools` directory. Here's an example:
+
+```typescript
+// src/tools/searchTool.ts
+import { McpServer } from "@modelcontextprotocol/server";
+import { ApiClient } from "../api/client";
+import { SearchParams, ApiResponse, ServiceItem } from "../types";
+import { logger } from "@mcp-devtools/core/logger";
+
+export const registerSearchTool = (
+  server: McpServer,
+  apiClient: ApiClient
+): void => {
+  // Define parameter schema
+  const searchParams = {
+    type: "object",
+    properties: {
+      query: {
+        type: "string",
+        description: "Search query",
+      },
+      maxResults: {
+        type: "number",
+        description: "Maximum number of results to return",
+        default: 10,
+      },
+    },
+    required: ["query"],
+  };
+
+  // Define tool names (primary + aliases)
+  const toolNames = ["search_items", "find_items", "query_items"];
+
+  // Register all tool names with the same handler
+  for (const tool of toolNames) {
+    server.tool(tool, searchParams, async (params: SearchParams) => {
+      try {
+        // Validate parameters
+        if (!params.query.trim()) {
+          return {
+            error: "Search query cannot be empty",
+          };
+        }
+
+        // Call API
+        const response = await apiClient.get("/search", {
+          params: {
+            q: params.query,
+            limit: params.maxResults || 10,
+          },
+        });
+
+        // Process and return results
+        const items = response.data.items || [];
+        return {
+          message: `Found ${items.length} items`,
+          items,
+        };
+      } catch (error) {
+        logger.error("Search tool error", { error, params });
+        return {
+          error: `Search failed: ${error.message}`,
+        };
+      }
+    });
+  }
+};
+```
+
+Create an index file to export all tools:
+
+```typescript
+// src/tools/index.ts
+export { registerSearchTool } from "./searchTool";
+export { registerCreateTool } from "./createTool";
+// Export other tools
+```
+
+## Step 7: Create Tests
+
+For each tool and component, create corresponding test files:
+
+```typescript
+// src/tools/searchTool.test.ts
+import { jest } from "@jest/globals";
+import { registerSearchTool } from "./searchTool";
+
+describe("Search Tool", () => {
+  const mockServer = {
+    tool: jest.fn(),
+  };
+
+  const mockApiClient = {
+    get: jest.fn(),
+    post: jest.fn(),
+    put: jest.fn(),
+    delete: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should register all tool names", () => {
+    registerSearchTool(mockServer as any, mockApiClient as any);
+
+    // Check that tool was registered with all names
+    expect(mockServer.tool).toHaveBeenCalledTimes(3);
+    expect(mockServer.tool).toHaveBeenCalledWith(
+      "search_items",
+      expect.any(Object),
+      expect.any(Function)
+    );
+    expect(mockServer.tool).toHaveBeenCalledWith(
+      "find_items",
+      expect.any(Object),
+      expect.any(Function)
+    );
+    expect(mockServer.tool).toHaveBeenCalledWith(
+      "query_items",
+      expect.any(Object),
+      expect.any(Function)
+    );
+  });
+
+  it("should return search results successfully", async () => {
+    registerSearchTool(mockServer as any, mockApiClient as any);
+
+    // Mock successful API response
+    mockApiClient.get.mockResolvedValue({
+      data: {
+        items: [
+          { id: "1", name: "Item 1" },
+          { id: "2", name: "Item 2" },
+        ],
+      },
+    });
+
+    // Get the handler function that was registered
+    const handler = mockServer.tool.mock.calls[0][2];
+
+    // Call the handler with test parameters
+    const result = await handler({ query: "test query", maxResults: 10 });
+
+    // Verify results
+    expect(result).toEqual({
+      message: "Found 2 items",
+      items: [
+        { id: "1", name: "Item 1" },
+        { id: "2", name: "Item 2" },
+      ],
+    });
+
+    // Verify API was called correctly
+    expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
+      params: {
+        q: "test query",
+        limit: 10,
+      },
+    });
+  });
+
+  it("should handle API errors", async () => {
+    registerSearchTool(mockServer as any, mockApiClient as any);
+
+    // Mock API error
+    mockApiClient.get.mockRejectedValue(new Error("API failure"));
+
+    // Get the handler function
+    const handler = mockServer.tool.mock.calls[0][2];
+
+    // Call the handler
+    const result = await handler({ query: "test query" });
+
+    // Verify error handling
+    expect(result).toEqual({
+      error: "Search failed: API failure",
+    });
+  });
+});
+```
+
+## Step 8: Create Documentation
+
+Create a comprehensive README.md file:
+
+````markdown
+# @mcp-devtools/[service-name]
+
+![npm version](https://img.shields.io/npm/v/@mcp-devtools/[service-name].svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Beta Status](https://img.shields.io/badge/status-beta-orange)
+
+MCP server for interacting with [Service] through AI assistants like Claude in the Cursor IDE.
+
+## ✨ Highlights
+
+- 🔍 **Comprehensive Integration**: Access full [Service] functionality through AI assistants
+- 🔄 **Two-Way Communication**: Query and update [Service] seamlessly
+- 🛠 **Rich Tool Set**: Execute searches, create items, and more
+- 📊 **Flexible Configuration**: Multiple configuration methods to suit your workflow
+- 🚀 **Simple Setup**: Quick integration with Cursor IDE and compatible MCP tools
+
+## 📋 Overview
+
+This package provides a Model Context Protocol (MCP) server that enables AI assistants to interact with [Service]. It exposes several tools for searching, creating, and updating items, making it possible for AI assistants to programmatically interact with your [Service] instance.
+
+## 🎮 Quick Start
+
+To use MCP DevTools with Cursor IDE:
+
+### Configure in Cursor Settings (Recommended)
+
+1. Open Cursor IDE Settings
+
+   - Use keyboard shortcut `CTRL+SHIFT+P` (or `CMD+SHIFT+P` on macOS)
+   - Type "Settings" and select "Cursor Settings"
+   - Navigate to the "MCP" section
+
+2. Add a New MCP Server
+
+   - Click the "Add Server" button
+   - Configure as follows:
+     - **Server name**: `[Service]`
+     - **Type**: `command`
+     - **Command**:
+       ```
+       env SERVICE_URL=https://[YOUR_SERVICE_URL] SERVICE_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/[service-name]
+       ```
+   - Replace `[YOUR_SERVICE_URL]` and `[YOUR_API_KEY]` with your specific values
+
+3. Save Configuration
+   - Click "Save" to apply the settings
+
+## 📘 Available Tools & Examples
+
+### Searching
+````
+
+# Search for items
+
+search_items "keyword"
+
+# Find items with limit
+
+find_items "keyword" with max results 20
+
+```
+
+### Creating Items
+
+```
+
+# Create a new item
+
+create_item "Item Name" with description "Detailed description"
+
+```
+
+## 📋 Tool Reference
+
+| Tool           | Description                   | Parameters                                                 | Aliases                      | Implementation                     |
+|----------------|-------------------------------|------------------------------------------------------------|------------------------------ |-----------------------------------|
+| `search_items` | Search for items              | `query` (string, required), `maxResults` (number, optional)| `find_items`, `query_items`  | [searchTool.ts](src/tools/searchTool.ts) |
+| `create_item`  | Create a new item             | `name` (string, required), `description` (string, required)| `add_item`                   | [createTool.ts](src/tools/createTool.ts) |
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+The server requires the following environment variables:
+
+| Variable          | Description                             | Required |
+|-------------------|-----------------------------------------|----------|
+| `SERVICE_URL`     | Your service API URL                    | Yes      |
+| `SERVICE_API_KEY` | API key for authentication              | Yes      |
+| `DEBUG`           | Enable debug logging (true/false)       | No       |
+```
+
+## Step 9: Register Package in Monorepo
+
+Update the root `package.json` to include your new package in the workspace:
+
+```json
+{
+  "workspaces": ["packages/*"]
+  // other root config
+}
+```
+
+## Step 10: Build and Test
+
+Build and test your package:
+
+```bash
+# Navigate to package directory
+cd packages/[service-name]
+
+# Install dependencies
+pnpm install
+
+# Build
+pnpm run build
+
+# Test
+pnpm test
+```
+
+## Post-Creation Checklist
+
+- [ ] All required files are created
+- [ ] Package.json is properly configured
+- [ ] Tools are implemented and registered
+- [ ] API client handles all necessary endpoints
+- [ ] Tests provide good coverage
+- [ ] Documentation is complete
+- [ ] Package builds successfully
+- [ ] Package works with Cursor IDE
+- [ ] Package follows all other project guidelines
+
+## Related Guidelines
+
+- Follow the TypeScript coding standards
+- Use core libraries and utilities
+- Implement consistent error handling
+- Document all tools in the README
+- Write comprehensive tests
+- Follow the MCP server implementation pattern

@@ -1,0 +1,95 @@
+---
+description: Core Libraries Usage Guidelines
+globs: packages/*/src/**/*.ts
+alwaysApply: true
+---
+
+# Core Libraries Usage Guidelines
+
+When developing MCP DevTools packages, prefer using shared core libraries over custom implementations to ensure consistency and maintainability.
+
+@file packages/jira/src/index.ts
+@file .cursor/rules/mcp-server-implementation.md
+
+## Required Core Libraries
+
+| Library       | Package                           | Purpose                   | Import Statement                                                         |
+| ------------- | --------------------------------- | ------------------------- | ------------------------------------------------------------------------ |
+| MCP Server    | `@modelcontextprotocol/server`    | Core server functionality | `import { createMcpServer } from '@modelcontextprotocol/server';`        |
+| MCP Inspector | `@modelcontextprotocol/inspector` | Debugging tools           | `import { inspector } from '@modelcontextprotocol/inspector';`           |
+| MCP Types     | `@modelcontextprotocol/types`     | Shared type definitions   | `import { McpRequest, McpResponse } from '@modelcontextprotocol/types';` |
+
+## Common Utilities
+
+The MCP DevTools core utilities should be used instead of reimplementing common functionality:
+
+```typescript
+// PREFERRED: Import from core utilities
+import { validateEnvVars, formatErrorResponse } from "@mcp-devtools/core/utils";
+
+// AVOID: Custom implementation of utilities
+const validateEnvVars = (required) => {
+  /* ... */
+}; // Don't do this
+```
+
+## Configuration Management
+
+Use the shared configuration management from core:
+
+```typescript
+import { loadConfig } from "@mcp-devtools/core/config";
+
+// Load configuration with standard validation
+const config = loadConfig({
+  requiredVars: ["API_KEY", "API_URL"],
+  optionalVars: {
+    TIMEOUT: "30000",
+    DEBUG: "false",
+  },
+});
+```
+
+## HTTP Client
+
+Use the shared HTTP client with standard error handling:
+
+```typescript
+import { httpClient } from "@mcp-devtools/core/http";
+
+// Make HTTP requests with standard error handling
+const response = await httpClient.get("https://api.example.com/data", {
+  headers: { Authorization: `Bearer ${config.API_KEY}` },
+});
+```
+
+## Logging
+
+Use the standardized logging system:
+
+```typescript
+import { logger } from "@mcp-devtools/core/logger";
+
+// Log with standard levels and formatting
+logger.info("Operation successful", { operationId: "123" });
+logger.error("API call failed", { error, statusCode: 500 });
+```
+
+## Authentication Helpers
+
+Use shared authentication utilities:
+
+```typescript
+import { createAuthHeaders, validateToken } from "@mcp-devtools/core/auth";
+
+// Create standard auth headers
+const headers = createAuthHeaders(config.API_KEY, config.API_SECRET);
+```
+
+## Guidelines
+
+1. **Always check core libraries first** before implementing new functionality
+2. **Keep dependencies updated** to ensure security and compatibility
+3. **Contribute improvements** back to core libraries instead of creating package-specific versions
+4. **Document usage** of core libraries in your package's README
+5. **Follow versioning guidelines** when updating core library dependencies

@@ -1,0 +1,62 @@
+---
+description: Package Documentation Standards
+globs: packages/*/README.md
+alwaysApply: true
+---
+
+# Package Documentation Standards
+
+Each package README.md should follow this structure:
+
+@file packages/jira/README.md
+@file .cursor/rules/repository-structure.md
+
+## Required Sections
+
+1. **Title and Badges**
+
+   ```markdown
+   # @mcp-devtools/package-name
+
+   ![npm version](https://img.shields.io/npm/v/@mcp-devtools/package-name.svg)
+   ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+   ![Status Badge](https://img.shields.io/badge/status-beta-orange)
+   ```
+
+2. **Short Description**
+
+   - Single paragraph explaining the purpose of the package
+
+3. **Highlights**
+
+   - Bullet points of key features with emoji icons
+
+4. **Quick Start**
+
+   - Installation instructions
+   - Configuration examples
+   - Minimal setup code
+
+5. **Tool Reference**
+
+   - Table with columns: Tool, Description, Parameters, Aliases, Implementation
+   - Each parameter should list type and whether it's required
+   - Link each tool name to its implementation file
+
+6. **Usage Examples**
+
+   - Show practical examples of using each tool
+   - Group related examples under headings
+
+7. **Configuration**
+   - Environment variables
+   - Configuration options
+   - Integration examples with different platforms
+
+## Style Guidelines
+
+- Use emoji icons in section headers
+- Include code examples in markdown code blocks
+- Use tables for structured information
+- Keep language clear and concise
+- Include links to related documentation

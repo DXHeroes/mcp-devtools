@@ -1,0 +1,61 @@
+---
+description: TypeScript Coding Standards
+globs: packages/*/src/**/*.ts
+alwaysApply: true
+---
+
+# TypeScript Coding Standards
+
+Follow these standards when writing TypeScript code for MCP DevTools:
+
+@file packages/jira/src/tools/getTicket.ts
+@file tsconfig.json
+@file .cursor/rules/testing-standards.md
+
+## Naming Conventions
+
+- **Files**: Use `camelCase` for filenames
+- **Interfaces**: Use `PascalCase` prefixed with `I` (e.g., `IToolParams`)
+- **Types**: Use `PascalCase` (e.g., `ToolResponse`)
+- **Functions**: Use `camelCase` (e.g., `executeQuery`)
+- **Constants**: Use `UPPER_SNAKE_CASE` for truly constant values
+- **Variables**: Use `camelCase`
+- **Private/Protected Members**: Prefix with underscore (e.g., `_privateMethod`)
+
+## Code Organization
+
+- One class/interface per file when possible
+- Group related functions in logical files
+- Export public API from index.ts files
+- Keep files under 300 lines when possible
+
+## TypeScript Best Practices
+
+- Use explicit typing over `any`
+- Prefer interfaces for object shapes
+- Use type guards for runtime type checking
+- Utilize generics for reusable components
+- Use readonly for immutable properties
+- Always specify return types for functions
+- Use null coalescing and optional chaining
+
+## Error Handling
+
+- Use typed error classes
+- Handle async errors with try/catch
+- Provide meaningful error messages
+- Return structured error responses
+
+## Comments
+
+- Use JSDoc for public APIs
+- Comment complex algorithms
+- Explain "why" not "what"
+- Keep comments up to date with code changes
+
+## Imports/Exports
+
+- Use named exports for multiple items
+- Use default export for primary component of a file
+- Group imports by external/internal/types
+- Avoid circular dependencies

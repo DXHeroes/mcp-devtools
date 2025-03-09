@@ -1,0 +1,76 @@
+---
+description: AI-Assisted Development Guidelines
+globs: **/*
+alwaysApply: false
+---
+
+# AI-Assisted Development Guidelines
+
+Follow these guidelines when using Cursor IDE with AI assistance for MCP DevTools development:
+
+@url https://docs.cursor.com/
+@file .cursor/rules/repository-structure.md
+
+## Effective AI Prompts
+
+1. **Be Specific**
+
+   - Include file paths and line numbers when referencing code
+   - Specify the expected behavior, not just the task
+   - Include relevant context (e.g., "This is part of the Jira MCP integration")
+
+2. **Chunk Complex Tasks**
+
+   - Break down complex tasks into smaller steps
+   - Ask for one implementation at a time
+   - Verify each step before proceeding to the next
+
+3. **Request Explanations**
+   - Ask AI to explain its reasoning
+   - Request documentation alongside implementation
+   - Ask for alternative approaches when appropriate
+
+## Code Review Assistance
+
+1. **Request Focused Reviews**
+
+   - Ask AI to review specific aspects (security, performance, etc.)
+   - Provide the full context of the code being reviewed
+   - Ask for specific improvements rather than general feedback
+
+2. **Validation Assistance**
+   - Ask AI to help write tests for your code
+   - Request validation of edge cases
+   - Use AI to check for potential bugs or edge cases
+
+## Documentation Assistance
+
+1. **Generate Documentation**
+
+   - Ask AI to create or update README sections
+   - Request JSDoc comments for functions
+   - Use AI to help document complex algorithms
+
+2. **Consistency**
+   - Ask AI to ensure documentation follows the project standards
+   - Request help maintaining consistent terminology
+   - Use AI to check for documentation gaps
+
+## Best Practices
+
+1. **Always Review AI-Generated Code**
+
+   - Check for correctness and appropriateness
+   - Verify complex algorithms
+   - Ensure it meets project standards
+
+2. **Iterative Refinement**
+
+   - Start with a basic implementation
+   - Refine with more specific requirements
+   - Use AI to help optimize the code
+
+3. **Enhance, Don't Replace**
+   - Use AI as a collaborator, not a replacement
+   - Maintain ownership of the code
+   - Understand the code AI generates

@@ -1,0 +1,59 @@
+---
+description: MCP Tool Implementation Guidelines
+globs: packages/*/src/tools/*.ts
+alwaysApply: true
+---
+
+# MCP Tool Implementation Guidelines
+
+When implementing a new MCP tool, follow these patterns:
+
+@file packages/jira/src/tools/getTicket.ts
+@file .cursor/rules/typescript-style.mdc
+
+## Tool Registration
+
+```typescript
+export const registerToolName = (server: McpServer): void => {
+  const toolParams = {
+    // Define parameters according to JSON schema
+  };
+
+  // For tools with aliases, use an array of tool names
+  const toolNames = ["primary_tool_name", "alias_1", "alias_2"];
+
+  // Register all tool names with the same handler
+  for (const tool of toolNames) {
+    server.tool(tool, toolParams, async (params) => {
+      try {
+        // Implementation
+        return {
+          message: "Success message",
+        };
+      } catch (error) {
+        return {
+          error: `Error message: ${error.message}`,
+        };
+      }
+    });
+  }
+};
+```
+
+## Parameter Validation
+
+- Always validate required parameters early in the function
+- Use TypeScript types/interfaces for parameter typing
+- Document parameters with clear descriptions
+
+## Error Handling
+
+- Use try/catch blocks for all API calls
+- Return meaningful error messages
+- Log errors with appropriate context
+
+## Documentation
+
+- Update the README.md with your new tool
+- Add the tool to the Tool Reference table with all parameters
+- Include any aliases in the documentation

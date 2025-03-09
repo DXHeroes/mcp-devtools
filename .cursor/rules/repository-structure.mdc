@@ -1,0 +1,84 @@
+---
+description: Repository Structure Guidelines
+globs: **/*
+alwaysApply: false
+---
+
+# Repository Structure Guidelines
+
+The MCP DevTools repository follows a monorepo structure with clear organization of packages and shared resources.
+
+@file package.json
+@file packages/jira/package.json
+@file .cursor/rules/core-libraries-usage.md
+
+## Top-Level Directory Structure
+
+```
+mcp-devtools/
+├── .github/            # GitHub workflows and templates
+├── .cursor/            # Cursor IDE configuration
+│   └── rules/          # Project coding rules and guidelines
+├── packages/           # Individual MCP packages
+│   ├── core/           # Core shared libraries
+│   ├── jira/           # Jira integration package
+│   ├── github/         # GitHub integration package
+│   └── ...             # Other integration packages
+├── examples/           # Example usage of MCP DevTools
+├── scripts/            # Build and maintenance scripts
+├── docs/               # Documentation files
+├── package.json        # Root package.json
+└── README.md           # Root README
+```
+
+## Package Structure
+
+Each package in the `packages/` directory should follow this structure:
+
+```
+packages/[package-name]/
+├── src/                # Source code
+│   ├── index.ts        # Package entry point
+│   ├── tools/          # MCP tool implementations
+│   │   ├── tool1.ts    # Individual tool implementation
+│   │   └── index.ts    # Tools export file
+│   ├── api/            # API client code
+│   └── types/          # TypeScript type definitions
+├── test/               # Test files
+├── dist/               # Compiled output (not in git)
+├── package.json        # Package manifest
+├── tsconfig.json       # TypeScript configuration
+└── README.md           # Package documentation
+```
+
+## Package Naming Conventions
+
+- All packages should be named with the `@mcp-devtools/` prefix
+- Package names should be simple and descriptive (e.g., `@mcp-devtools/jira`)
+- Use kebab-case for package names (e.g., `@mcp-devtools/github-actions`)
+
+## Dependency Management
+
+- Core dependencies should be defined in the root `package.json`
+- Package-specific dependencies should be in each package's `package.json`
+- Use exact versions for dependencies to ensure consistency
+- Use peerDependencies for framework dependencies
+
+## Build Configuration
+
+- TypeScript configuration should extend from a base configuration when possible
+- Package-specific build settings should be in each package's configuration files
+- Build outputs should be consistent across packages
+
+## Documentation Structure
+
+- Each package should have its own comprehensive README.md
+- Root README.md should provide an overview of all packages
+- Use relative links between documentation files when appropriate
+
+## Version Control
+
+- Use feature branches for development
+- Keep commits focused and atomic
+- Reference issue numbers in commit messages when applicable
+- Use pull requests for code review before merging
