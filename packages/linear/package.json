@@ -1,12 +1,14 @@
 {
 	"name": "@mcp-devtools/linear",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Talk to Linear - MCP Server",
 	"private": false,
 	"bin": {
 		"mcp-linear": "./build/index.js"
 	},
-	"files": ["build"],
+	"files": [
+		"build"
+	],
 	"type": "module",
 	"scripts": {
 		"build": "tsc && shx chmod +x build/*.js",
