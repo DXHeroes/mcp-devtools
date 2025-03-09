@@ -102,8 +102,8 @@ export async function getIssue(
 
 		const query = isIdentifier
 			? gql`
-          query GetIssueByIdentifier($identifier: String!) {
-            issue(identifier: $identifier) {
+          query GetIssueByIdentifier($id: String!) {
+            issue(id: $id) {
               id
               identifier
               title
@@ -162,7 +162,7 @@ export async function getIssue(
           }
         `;
 
-		const variables = isIdentifier ? { identifier: issueId } : { id: issueId };
+		const variables = { id: issueId };
 
 		const response = await graphQLClient.request<IssueResponse>(
 			query,
