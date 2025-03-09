@@ -1,5 +1,5 @@
 {
-  "extends": "../typescript-config/tsconfig.base.json",
+  "extends": "@mcp-devtools/typescript-config/tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./build",
     "rootDir": "./src",

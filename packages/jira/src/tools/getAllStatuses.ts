@@ -1,6 +1,6 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import * as jiraApi from "../api";
+import * as jiraApi from "../api.js";
 
 /**
  * Register the get_all_statuses tool

@@ -10,21 +10,21 @@
 			"initial-version": "0.1.0"
 		},
 		"core/http-client": {
-			"changelog-path": "core/http-client/CHANGELOG.md",
+			"changelog-path": "CHANGELOG.md",
 			"release-type": "node",
 			"bump-minor-pre-major": true,
 			"bump-patch-for-minor-pre-major": true,
 			"initial-version": "0.1.0"
 		},
 		"core/typescript-config": {
-			"changelog-path": "core/typescript-config/CHANGELOG.md",
+			"changelog-path": "CHANGELOG.md",
 			"release-type": "node",
 			"bump-minor-pre-major": true,
 			"bump-patch-for-minor-pre-major": true,
 			"initial-version": "0.1.0"
 		},
 		"packages/jira": {
-			"changelog-path": "packages/jira/CHANGELOG.md",
+			"changelog-path": "CHANGELOG.md",
 			"release-type": "node",
 			"bump-minor-pre-major": true,
 			"bump-patch-for-minor-pre-major": true,

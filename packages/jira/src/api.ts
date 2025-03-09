@@ -1,4 +1,8 @@
-import { JIRA_URL, getAttachmentAuthHeaders, getAuthHeaders } from "./config";
+import {
+	JIRA_URL,
+	getAttachmentAuthHeaders,
+	getAuthHeaders,
+} from "./config.js";
 // Using Node.js built-in fetch API
 import type {
 	JiraAttachmentResponse,
@@ -8,7 +12,7 @@ import type {
 	JiraStatus,
 	JiraTicketResponse,
 	JiraUser,
-} from "./types";
+} from "./types.js";
 
 /**
  * Execute a JQL query

@@ -11,7 +11,7 @@ import {
   registerQueryAssignableTool,
   registerAddAttachmentFromUrlTool,
   registerAddAttachmentFromConfluenceTool
-} from './tools/index';
+} from './tools/index.js';
 
 /**
  * Register all tools for the Jira MCP server

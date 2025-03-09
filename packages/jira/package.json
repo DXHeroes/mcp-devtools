@@ -6,14 +6,10 @@
 	"bin": {
 		"mcp-jira": "./build/index.js"
 	},
-	"files": [
-		"build"
-	],
+	"files": ["build"],
 	"type": "module",
 	"scripts": {
-		"build:tsc": "rollup -c",
-		"build:bundle": "pnpm run build:tsc",
-		"build": "pnpm run build:tsc && npm run build:bundle && chmod +x build/index.js",
+		"build": "tsc && shx chmod +x build/*.js",
 		"prepare": "pnpm run build",
 		"watch": "tsc --watch",
 		"inspector": "npx @modelcontextprotocol/inspector build/index.js"
@@ -26,13 +22,11 @@
 	},
 	"devDependencies": {
 		"@mcp-devtools/typescript-config": "workspace:*",
-		"@rollup/plugin-commonjs": "^28.0.3",
-		"@rollup/plugin-json": "^6.1.0",
-		"@rollup/plugin-node-resolve": "^16.0.0",
 		"@types/node": "^22.13.9",
 		"@types/qs": "^6.9.14",
 		"rollup": "^4.35.0",
 		"rollup-plugin-typescript2": "^0.36.0",
+		"shx": "^0.3.4",
 		"typescript": "^5.8.2"
 	}
 }
