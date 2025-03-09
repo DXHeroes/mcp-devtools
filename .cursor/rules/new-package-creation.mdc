@@ -11,9 +11,9 @@ This guide provides a step-by-step process for creating a new MCP server package
 @url https://docs.cursor.com/context/rules-for-ai
 @file packages/jira/package.json
 @file packages/jira/src/index.ts
-@file .cursor/rules/repository-structure.md
-@file .cursor/rules/mcp-server-implementation.md
-@file .cursor/rules/core-libraries-usage.md
+@file .cursor/rules/repository-structure.mdc
+@file .cursor/rules/mcp-server-implementation.mdc
+@file .cursor/rules/core-libraries-usage.mdc
 
 ## Step 1: Set Up Package Structure
 
@@ -447,9 +447,9 @@ Create a comprehensive README.md file:
 ````markdown
 # @mcp-devtools/[service-name]
 
-![npm version](https://img.shields.io/npm/v/@mcp-devtools/[service-name].svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Beta Status](https://img.shields.io/badge/status-beta-orange)
+![npm version](mdc:https:/img.shields.io/npm/v/@mcp-devtools/[service-name].svg)
+![License: MIT](mdc:https:/img.shields.io/badge/License-MIT-blue.svg)
+![Beta Status](mdc:https:/img.shields.io/badge/status-beta-orange)
 
 MCP server for interacting with [Service] through AI assistants like Claude in the Cursor IDE.
 
@@ -521,8 +521,8 @@ create_item "Item Name" with description "Detailed description"
 
 | Tool           | Description                   | Parameters                                                 | Aliases                      | Implementation                     |
 |----------------|-------------------------------|------------------------------------------------------------|------------------------------ |-----------------------------------|
-| `search_items` | Search for items              | `query` (string, required), `maxResults` (number, optional)| `find_items`, `query_items`  | [searchTool.ts](src/tools/searchTool.ts) |
-| `create_item`  | Create a new item             | `name` (string, required), `description` (string, required)| `add_item`                   | [createTool.ts](src/tools/createTool.ts) |
+| `search_items` | Search for items              | `query` (string, required), `maxResults` (number, optional)| `find_items`, `query_items`  | [searchTool.ts](mdc:src/tools/searchTool.ts) |
+| `create_item`  | Create a new item             | `name` (string, required), `description` (string, required)| `add_item`                   | [createTool.ts](mdc:src/tools/createTool.ts) |
 
 ## ⚙️ Configuration
 

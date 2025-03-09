@@ -10,7 +10,7 @@ The MCP DevTools repository follows a monorepo structure with clear organization
 
 @file package.json
 @file packages/jira/package.json
-@file .cursor/rules/core-libraries-usage.md
+@file .cursor/rules/core-libraries-usage.mdc
 
 ## Top-Level Directory Structure
 

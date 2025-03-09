@@ -10,7 +10,7 @@ Follow these standards when writing TypeScript code for MCP DevTools:
 
 @file packages/jira/src/tools/getTicket.ts
 @file tsconfig.json
-@file .cursor/rules/testing-standards.md
+@file .cursor/rules/testing-standards.mdc
 
 ## Naming Conventions
 

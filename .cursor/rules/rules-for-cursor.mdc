@@ -1,6 +1,6 @@
 ---
 description: Rules for Writing Cursor Rules
-globs: .cursor/rules/*.md
+globs: .cursor/rules/*.mdc
 alwaysApply: true
 ---
 
@@ -9,8 +9,8 @@ alwaysApply: true
 This document provides guidelines for creating and maintaining Cursor IDE rules for the MCP DevTools repository.
 
 @url https://docs.cursor.com/context/rules-for-ai
-@file .cursor/rules/repository-structure.md
-@file .cursor/rules/ai-assisted-development.md
+@file .cursor/rules/repository-structure.mdc
+@file .cursor/rules/ai-assisted-development.mdc
 
 ## Rule Structure
 
@@ -28,7 +28,7 @@ alwaysApply: true|false
 Brief introduction to the rule and its purpose.
 
 @file path/to/example/file.ts
-@file path/to/related/rule.md
+@file path/to/related/rule.mdc
 @url https://relevant-docs-url.com/
 
 ## Sections

@@ -9,8 +9,8 @@ alwaysApply: true
 When implementing a new MCP server or updating an existing one, follow these guidelines:
 
 @file packages/jira/src/index.ts
-@file .cursor/rules/core-libraries-usage.md
-@file .cursor/rules/typescript-style.md
+@file .cursor/rules/core-libraries-usage.mdc
+@file .cursor/rules/typescript-style.mdc
 
 ## Server Setup
 

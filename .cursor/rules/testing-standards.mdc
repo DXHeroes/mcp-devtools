@@ -9,7 +9,7 @@ alwaysApply: true
 Follow these standards when writing tests for MCP DevTools packages:
 
 @file packages/_/src/\*\*/_.test.ts
-@file .cursor/rules/typescript-style.md
+@file .cursor/rules/typescript-style.mdc
 
 ## Test Structure
 

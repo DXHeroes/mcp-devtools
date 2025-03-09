@@ -9,7 +9,7 @@ alwaysApply: true
 Each package README.md should follow this structure:
 
 @file packages/jira/README.md
-@file .cursor/rules/repository-structure.md
+@file .cursor/rules/repository-structure.mdc
 
 ## Required Sections
 
@@ -18,9 +18,9 @@ Each package README.md should follow this structure:
    ```markdown
    # @mcp-devtools/package-name
 
-   ![npm version](https://img.shields.io/npm/v/@mcp-devtools/package-name.svg)
-   ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-   ![Status Badge](https://img.shields.io/badge/status-beta-orange)
+   ![npm version](mdc:https:/img.shields.io/npm/v/@mcp-devtools/package-name.svg)
+   ![License: MIT](mdc:https:/img.shields.io/badge/License-MIT-blue.svg)
+   ![Status Badge](mdc:https:/img.shields.io/badge/status-beta-orange)
    ```
 
 2. **Short Description**

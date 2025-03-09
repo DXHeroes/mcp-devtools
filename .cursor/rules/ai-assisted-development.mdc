@@ -9,7 +9,7 @@ alwaysApply: false
 Follow these guidelines when using Cursor IDE with AI assistance for MCP DevTools development:
 
 @url https://docs.cursor.com/
-@file .cursor/rules/repository-structure.md
+@file .cursor/rules/repository-structure.mdc
 
 ## Effective AI Prompts
 

@@ -9,7 +9,7 @@ alwaysApply: true
 When developing MCP DevTools packages, prefer using shared core libraries over custom implementations to ensure consistency and maintainability.
 
 @file packages/jira/src/index.ts
-@file .cursor/rules/mcp-server-implementation.md
+@file .cursor/rules/mcp-server-implementation.mdc
 
 ## Required Core Libraries
 
