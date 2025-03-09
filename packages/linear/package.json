@@ -1,0 +1,30 @@
+{
+	"name": "@mcp-devtools/linear",
+	"version": "0.1.0",
+	"description": "Talk to Linear - MCP Server",
+	"private": false,
+	"bin": {
+		"mcp-linear": "./build/index.js"
+	},
+	"files": ["build"],
+	"type": "module",
+	"scripts": {
+		"build": "tsc && shx chmod +x build/*.js",
+		"prepare": "pnpm run build",
+		"watch": "tsc --watch",
+		"inspector": "npx @modelcontextprotocol/inspector build/index.js"
+	},
+	"dependencies": {
+		"@mcp-devtools/http-client": "workspace:*",
+		"@modelcontextprotocol/sdk": "1.6.1",
+		"graphql-request": "^6.1.0",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@mcp-devtools/typescript-config": "workspace:*",
+		"@types/node": "^22.13.9",
+		"graphql": "^16.8.1",
+		"shx": "^0.3.4",
+		"typescript": "^5.8.2"
+	}
+}
