@@ -1,93 +1,95 @@
 # MCP DevTools
 
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+[![Beta Status](https://img.shields.io/badge/status-beta-orange)](https://github.com/modelcontextprotocol/mcp-devtools)
+
 MCP (Model Context Protocol) DevTools is a collection of packages that enable AI assistants to interact with external tools and services through the Model Context Protocol.
 
-## Overview
+## ✨ Highlights
 
-This monorepo contains packages that implement the Model Context Protocol, providing tools that enable AI assistants to access and manipulate data from external services. While initially offering Jira integration, this repository is designed as a general-purpose collection of MCP tools that will expand over time to support various services and use cases.
+- 🔌 **Seamless Integration**: Connect AI assistants to external services and tools
+- 🛠 **Extensible Framework**: Easily create new integrations with the Model Context Protocol
+- 🔍 **Powerful Interactions**: Enable AI to access and manipulate data from external services
+- 📊 **Jira Integration**: Robust Jira integration with comprehensive functionality
+- 🚀 **Developer-Friendly**: Simple setup with detailed documentation for the best developer experience
 
 > **Note**: This project is currently in beta (0.x.x versions). APIs may change between minor versions during the beta phase.
 
-## Packages
+## 📦 Available Packages
 
-### Core Packages (Internal Use Only)
+| Package                                         | Description                 | Status                                                                                                                  |
+| ----------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| [@mcp-devtools/jira](./packages/jira/README.md) | Jira MCP server integration | [![npm version](https://img.shields.io/npm/v/@mcp-devtools/jira.svg)](https://www.npmjs.com/package/@mcp-devtools/jira) |
 
-- **[@mcp-core/typescript-config](./core/typescript-config/README.md)** - Shared TypeScript configuration
-- **[@mcp-core/http-client](./core/http-client/README.md)** - HTTP client for API requests
+## 🚀 Quick Start
 
-These core packages are for internal use only and are not published to npm.
-
-### MCP Servers (Published Packages)
-
-- **[@mcp-devtools/jira](./packages/jira/README.md)** - Jira MCP server integration
-
-Only the MCP server packages under the `@mcp-devtools` scope are published to npm.
-
-## Using MCP Tools
-
-MCP tools in this repository can be integrated with AI assistants that support the Model Context Protocol. Here's how to use them in different environments:
-
-To use MCP tools with Cursor IDE:
-
-1. Configure the MCP server in Cursor settings
-2. Access the tool functionality directly through the Cursor IDE chat
-
-### Jira Configuration
-
-#### 1. General configuration via Cursor Settings (RECOMMENDED)
-
-To use the Jira MCP server with Cursor IDE, configure the server in your Cursor settings:
-
-1. Open Cursor IDE
-2. Navigate to Settings (or CTRL+SHIFT+P) > Cursor Settings > MCP
-3. Add a new MCP server with the following configuration:
-
-- Server name: `Jira`
-- Type: `command`
-- Command: `env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/jira`
-
-#### 2. Project-wide configuration via .cursor/mcp.json (NOT RECOMMENDED)
-
-> [!WARNING]  
-> This approach is not recommended as it might leak your secrets to other users when committing to the git repository.
-
-For project-specific Jira configuration, you can create a `.cursor/mcp.json` file in your project root.
-This allows you to maintain separate MCP server configurations for different projects:
-
-```json
-{
-  "mcpServers": {
-    "@mcp-devtools/jira": {
-      "command": "env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx",
-      "args": ["-y", "@mcp-devtools/jira"]
-    }
-  }
-}
-```
-
-### Using Jira MCP in Chat
-
-Once configured, you can interact with Jira through chat commands:
+To use MCP DevTools with Cursor IDE:
 
 ```bash
-get task [ticket id]
-# example
+# Configure in Cursor settings (recommended)
+# Settings > Cursor Settings > MCP
+# Add a new MCP server with:
+# Name: Jira
+# Type: command
+# Command: env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/jira
+```
+
+Once configured, interact with Jira through chat commands:
+
+```
 get task SCRUM-1
 ```
 
-Available commands:
+## 📖 Documentation
 
-- `get task [ticket id]` - Retrieve details of a specific Jira ticket
-- `search tasks [query]` - Search for Jira tickets matching a query
-- `update task [ticket id] [field] [value]` - Update a field on a ticket
-- `get my tasks` - List tickets assigned to you
+- [Jira Package Documentation](./packages/jira/README.md)
+- [Getting Started Guide](./docs/getting-started.md)
+- [Contributing Guidelines](./CONTRIBUTING.md)
 
-For more detailed information on all available commands, refer to the [Jira package documentation](./packages/jira/README.md).
+## 🧩 Repository Structure
+
+```
+mcp-devtools/
+├── core/                 # Infrastructure and utility packages
+│   ├── typescript-config/  # Shared TypeScript configuration
+│   └── http-client/        # HTTP client utilities
+│
+├── packages/             # Functional MCP server packages
+│   └── jira/               # Jira integration MCP server
+│       └── README.md         # Package documentation
+│
+└── ...
+```
+
+## 🛠 Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Build all packages
+pnpm build
+
+# Development with auto-rebuild
+pnpm dev
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please check our [Contributing Guidelines](./CONTRIBUTING.md) for details.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- **GitHub Issues**: For bug reports and feature requests
+- **Discussions**: For questions and community support
 
 ## Project Structure
 
 ```
-
 mcp-devtools/
 ├── core/ # Infrastructure and utility packages
 │ ├── typescript-config/ # Shared TypeScript configuration
@@ -97,7 +99,6 @@ mcp-devtools/
 │ └── jira/ # Jira integration MCP server
 ├── package.json # Root package configuration
 └── pnpm-workspace.yaml # Workspace configuration
-
 ```
 
 ## Development
