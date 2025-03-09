@@ -10,20 +10,23 @@ MCP (Model Context Protocol) DevTools is a collection of packages that enable AI
 - 🔌 **Seamless Integration**: Connect AI assistants to external services and tools
 - 🛠 **Extensible Framework**: Easily create new integrations with the Model Context Protocol
 - 🔍 **Powerful Interactions**: Enable AI to access and manipulate data from external services
-- 📊 **Jira Integration**: Robust Jira integration with comprehensive functionality
+- 📊 **Robust Integrations**: Comprehensive functionality for Jira and Linear
 - 🚀 **Developer-Friendly**: Simple setup with detailed documentation for the best developer experience
 
 > **Note**: This project is currently in beta (0.x.x versions). APIs may change between minor versions during the beta phase.
 
 ## 📦 Available Packages
 
-| Package                                         | Description                 | Status                                                                                                                  |
-| ----------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| [@mcp-devtools/jira](./packages/jira/README.md) | Jira MCP server integration | [![npm version](https://img.shields.io/npm/v/@mcp-devtools/jira.svg)](https://www.npmjs.com/package/@mcp-devtools/jira) |
+| Package                                             | Description                   | Status                                                                                                                      |
+| --------------------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [@mcp-devtools/jira](./packages/jira/README.md)     | Jira MCP server integration   | [![npm version](https://img.shields.io/npm/v/@mcp-devtools/jira.svg)](https://www.npmjs.com/package/@mcp-devtools/jira)     |
+| [@mcp-devtools/linear](./packages/linear/README.md) | Linear MCP server integration | [![npm version](https://img.shields.io/npm/v/@mcp-devtools/linear.svg)](https://www.npmjs.com/package/@mcp-devtools/linear) |
 
 ## 🚀 Quick Start
 
 ### Configuration in Cursor IDE
+
+#### Jira Integration
 
 1. Open Cursor Settings → MCP
 2. Click "Add New MCP Server"
@@ -39,9 +42,25 @@ MCP (Model Context Protocol) DevTools is a collection of packages that enable AI
 > - `JIRA_API_MAIL`: Your Atlassian account email
 > - `JIRA_API_KEY`: Your Atlassian API key ([Create one here](https://id.atlassian.com/manage-profile/security/api-tokens))
 
-### Using Jira Tools
+#### Linear Integration
 
-Once configured, you can interact with Jira through natural language commands in Cursor. Examples:
+1. Open Cursor Settings → MCP
+2. Click "Add New MCP Server"
+3. Fill in the following details:
+   - **Name**: `Linear`
+   - **Type**: `command`
+   - **Command**:
+     `env LINEAR_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/linear`
+
+> **Required Environment Variables**:
+>
+> - `LINEAR_API_KEY`: Your Linear API key (Create one in Linear app: Settings → API → Create Key)
+
+### Using Tools
+
+Once configured, you can interact with tools through natural language commands in Cursor.
+
+#### Jira Examples:
 
 ```
 # Fetch a specific ticket
@@ -57,11 +76,31 @@ read ticket SCRUM-123
 create ticket project=SCRUM summary="Fix login bug" description="Users can't log in" issuetype=Bug
 ```
 
-For a complete list of available commands, refer to the [Jira Package Documentation](./packages/jira/README.md).
+#### Linear Examples:
+
+```
+# Get a specific issue
+get_issue SS-33
+
+# Search for issues
+search_issues "priority is high" with limit 5
+
+# Create a new issue
+create_issue for team "eng" titled "Fix API response format" with description "The API is returning incorrect data format" and priority 1
+
+# List teams
+list_teams
+```
+
+For a complete list of available commands, refer to the package documentation:
+
+- [Jira Package Documentation](./packages/jira/README.md)
+- [Linear Package Documentation](./packages/linear/README.md)
 
 ## 📖 Documentation
 
 - [Jira Package Documentation](./packages/jira/README.md)
+- [Linear Package Documentation](./packages/linear/README.md)
 - [Getting Started Guide](./docs/getting-started.md)
 - [Contributing Guidelines](./CONTRIBUTING.md)
 
@@ -74,7 +113,9 @@ mcp-devtools/
 │   └── http-client/        # HTTP client utilities
 │
 ├── packages/             # Functional MCP server packages
-│   └── jira/               # Jira integration MCP server
+│   ├── jira/               # Jira integration MCP server
+│   │   └── README.md         # Package documentation
+│   └── linear/             # Linear integration MCP server
 │       └── README.md         # Package documentation
 │
 └── ...
@@ -115,7 +156,8 @@ mcp-devtools/
 │ └── http-client/ # HTTP client utilities
 │
 ├── packages/ # Functional MCP server packages
-│ └── jira/ # Jira integration MCP server
+│ ├── jira/ # Jira integration MCP server
+│ └── linear/ # Linear integration MCP server
 ├── package.json # Root package configuration
 └── pnpm-workspace.yaml # Workspace configuration
 ```
@@ -230,14 +272,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 1. **Connection Problems**
 
-   - Ensure your Jira API credentials are correct
-   - Check network connectivity to your Jira instance
-   - Verify that the JIRA_URL includes the correct workspace name
+   - Ensure your API credentials are correct
+   - Check network connectivity to your service instances
+   - Verify URLs and workspace names
 
 2. **Permission Errors**
 
-   - Ensure your Jira account has appropriate permissions for the actions you're attempting
-   - API tokens may need specific permissions enabled in your Atlassian account
+   - Ensure your accounts have appropriate permissions for the actions you're attempting
+   - API tokens may need specific permissions enabled in your account settings
 
 3. **Command Not Found**
    - If using npx, ensure you're connected to npm registry
