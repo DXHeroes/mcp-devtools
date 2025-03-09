@@ -27,28 +27,47 @@ Only the MCP server packages under the `@mcp-devtools` scope are published to np
 
 MCP tools in this repository can be integrated with AI assistants that support the Model Context Protocol. Here's how to use them in different environments:
 
-### Using with Cursor IDE
-
 To use MCP tools with Cursor IDE:
 
 1. Configure the MCP server in Cursor settings
 2. Access the tool functionality directly through the Cursor IDE chat
 
-#### Jira
+### Jira Configuration
 
-1. MCP Server Configuration
+#### 1. General configuration via Cursor Settings (RECOMMENDED)
 
-Go to Cursor Settings > MCP > Add new MCP server
+To use the Jira MCP server with Cursor IDE, configure the server in your Cursor settings:
+
+1. Open Cursor IDE
+2. Navigate to Settings (or CTRL+SHIFT+P) > Cursor Settings > MCP
+3. Add a new MCP server with the following configuration:
 
 - Server name: `Jira`
 - Type: `command`
-- Command:
+- Command: `env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx -y @mcp-devtools/jira`
 
-```bash
-env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx @mcp-devtools/jira
+#### 2. Project-wide configuration via .cursor/mcp.json (NOT RECOMMENDED)
+
+> [!WARNING]  
+> This approach is not recommended as it might leak your secrets to other users when committing to the git repository.
+
+For project-specific Jira configuration, you can create a `.cursor/mcp.json` file in your project root.
+This allows you to maintain separate MCP server configurations for different projects:
+
+```json
+{
+  "mcpServers": {
+    "@mcp-devtools/jira": {
+      "command": "env JIRA_URL=https://[YOUR_WORKSPACE].atlassian.net JIRA_API_MAIL=[YOUR_EMAIL] JIRA_API_KEY=[YOUR_API_KEY] npx",
+      "args": ["-y", "@mcp-devtools/jira"]
+    }
+  }
+}
 ```
 
-2. Usage in chat
+### Using Jira MCP in Chat
+
+Once configured, you can interact with Jira through chat commands:
 
 ```bash
 get task [ticket id]
@@ -56,7 +75,14 @@ get task [ticket id]
 get task SCRUM-1
 ```
 
-For specific tool configuration instructions, refer to the README in each package directory.
+Available commands:
+
+- `get task [ticket id]` - Retrieve details of a specific Jira ticket
+- `search tasks [query]` - Search for Jira tickets matching a query
+- `update task [ticket id] [field] [value]` - Update a field on a ticket
+- `get my tasks` - List tickets assigned to you
+
+For more detailed information on all available commands, refer to the [Jira package documentation](./packages/jira/README.md).
 
 ## Project Structure
 
@@ -86,8 +112,6 @@ This repository uses pnpm workspaces for package management. To get started:
    npm install -g pnpm
    ```
 
-````
-
 2. Install dependencies:
 
    ```bash
@@ -111,8 +135,6 @@ pnpm dev
 
 This repository is set up with automated release management using release-please and GitHub Actions for publishing packages to npmjs.org.
 
-> **Note**: Only packages with the `@mcp-devtools` prefix are published to npm. Core packages (`@mcp-core/*`) are for internal use only.
-
 #### Beta Status
 
 All published packages are currently in beta status (0.x.x versions) and use the `beta` npm tag. During this phase:
@@ -120,62 +142,6 @@ All published packages are currently in beta status (0.x.x versions) and use the
 - Breaking changes may occur in minor version updates
 - Install the packages using: `npm install @mcp-devtools/package-name@beta`
 - When the project reaches stability, we will release version 1.0.0
-
-#### Automated Versioning with Release Please
-
-Release-please automatically creates and maintains release PRs based on [conventional commits](https://www.conventionalcommits.org/):
-
-- When you push changes to the `main` branch with conventional commit messages, release-please analyzes them and updates a release PR
-- Commit types like `feat:`, `fix:`, and `chore:` are used to determine version bumps (semver)
-- Once the release PR is merged, packages are automatically published to npm
-
-The conventional commit types are mapped to semantic versioning as follows:
-
-- `feat:` - Minor version bump (new feature)
-- `fix:` - Patch version bump (bug fix)
-- `feat!:` or `fix!:` - Major version bump (breaking change)
-- `docs:`, `chore:`, `style:`, `refactor:`, `perf:`, `test:` - No version bump
-
-Example commit messages:
-
-```
-feat: add new API endpoint for Jira comments
-fix: resolve authentication issue with Jira API
-feat!: redesign http-client interface (BREAKING CHANGE)
-```
-
-#### Manual Publishing Options
-
-There are two additional ways to trigger a release:
-
-1. **Create a GitHub Release**: When you create a new release in GitHub, the packages will be published with the release tag version.
-
-2. **Manual Trigger**: You can manually trigger the npm-publish workflow from the GitHub Actions tab and specify a version:
-   - `patch`, `minor`, or `major` for semantic versioning bumps
-   - A specific version like `1.2.3`
-
-To publish, you need to:
-
-1. Ensure you have the `NPM_TOKEN` secret set up in your GitHub repository settings
-2. Make sure all packages you want to publish have the correct information in their package.json files
-3. Packages are published with public access (`--access public`)
-
-#### Setting up for local publishing (for maintainers)
-
-If you need to publish packages locally for testing:
-
-1. Login to npm:
-
-   ```bash
-   npm login
-   ```
-
-2. Once authenticated, you can publish packages using:
-   ```bash
-   pnpm -r publish --access public --tag beta
-   ```
-
-Note: It's recommended to use the GitHub Actions workflow for official releases.
 
 ### Debugging
 
@@ -186,30 +152,6 @@ pnpm inspector
 ```
 
 The Inspector will provide a URL to access debugging tools in your browser.
-
-### Jira Integration Setup
-
-To use the Jira MCP server with Cursor IDE, configure the server in your Cursor settings:
-
-1. Open Cursor IDE
-2. Navigate to Settings (or CTRL+SHIFT+P) > Cursor Settings > MCP
-3. Add a new MCP server with the following configuration:
-
-```json
-{
-  "mcpServers": {
-    "Jira communication server": {
-      "command": "node",
-      "args": ["/path/to/node_modules/@mcp-devtools/jira/build/index.js"],
-      "env": {
-        "JIRA_URL": "https://your-domain.atlassian.net",
-        "JIRA_API_MAIL": "your.email@example.com",
-        "JIRA_API_KEY": "your-api-token-from-atlassian"
-      }
-    }
-  }
-}
-```
 
 ## Contributing
 
@@ -261,4 +203,42 @@ BREAKING CHANGE: The http-client API has been completely redesigned to improve u
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-````
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Connection Problems**
+
+   - Ensure your Jira API credentials are correct
+   - Check network connectivity to your Jira instance
+   - Verify that the JIRA_URL includes the correct workspace name
+
+2. **Permission Errors**
+
+   - Ensure your Jira account has appropriate permissions for the actions you're attempting
+   - API tokens may need specific permissions enabled in your Atlassian account
+
+3. **Command Not Found**
+   - If using npx, ensure you're connected to npm registry
+   - For local installations, check that your package installation was successful
+
+For more troubleshooting help, open an issue on our GitHub repository.
+
+## Roadmap
+
+Future development plans for MCP DevTools include:
+
+- Additional service integrations (GitHub, Confluence, etc.)
+- Enhanced security features
+- Support for custom authentication methods
+- Expanded querying capabilities
+- Performance optimizations
+
+## Community and Support
+
+- **GitHub Issues**: For bug reports and feature requests
+- **Discussions**: For questions and community support
+- **Contributing**: See our contributing guidelines above
+
+We welcome feedback and contributions from the community to help improve these tools.
