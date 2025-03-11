@@ -22,6 +22,8 @@ async function main(): Promise<void> {
 		const server = new McpServer({
 			name: "jira-mcp-server",
 			version: "1.0.0",
+			description: "Talk to Jira - MCP Server",
+			author: "DX Heroes (https://dxheroes.io)",
 		});
 
 		// Register all tools

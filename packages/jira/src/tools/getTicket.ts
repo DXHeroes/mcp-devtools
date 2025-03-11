@@ -17,12 +17,7 @@ interface TicketDescription {
 export const registerGetTicketTools = (server: McpServer): void => {
 	// Define schema for ticket retrieval
 	const getTicketParams = {
-		jql: z.string().describe("JQL query string"),
-		maxResults: z
-			.number()
-			.optional()
-			.default(10)
-			.describe("Maximum number of results to return"),
+		issueIdOrKey: z.string().describe("The issue ID or key of the ticket"),
 	};
 
 	// Register all ticket retrieval tools
@@ -35,9 +30,9 @@ export const registerGetTicketTools = (server: McpServer): void => {
 	];
 
 	for (const tool of getTicketTools) {
-		server.tool(tool, getTicketParams, async ({ jql, maxResults }) => {
+		server.tool(tool, getTicketParams, async ({ issueIdOrKey }) => {
 			try {
-				const response = await jiraApi.executeJQL(jql, maxResults);
+				const response = await jiraApi.getTicket(issueIdOrKey);
 
 				if ("error" in response) {
 					return {
@@ -51,26 +46,23 @@ export const registerGetTicketTools = (server: McpServer): void => {
 					};
 				}
 
-				// Return only the ticket name and description
-				const tickets = response.issues.map((issue) => {
-					const descObj = issue.fields.description as
-						| TicketDescription
-						| undefined;
-					const description =
-						descObj?.content?.[0]?.content?.[0]?.text || "No description";
-
-					return {
-						key: issue.key,
-						summary: issue.fields.summary,
-						description,
-					};
-				});
+				const ticket = {
+					key: response.fields.key,
+					summary: response.fields.summary,
+					description: response.fields.description,
+					attachment: response.fields.attachment?.map((attachment) => ({
+						id: attachment.id,
+						filename: attachment.filename,
+						size: attachment.size,
+						content: attachment.content,
+					})),
+				};
 
 				return {
 					content: [
 						{
 							type: "text",
-							text: `Found ${tickets.length} tickets: ${JSON.stringify(tickets, null, 2)}`,
+							text: `Found ticket: ${JSON.stringify(ticket, null, 2)}`,
 						},
 					],
 				};

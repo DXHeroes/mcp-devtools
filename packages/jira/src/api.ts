@@ -7,6 +7,7 @@ import {
 import type {
 	JiraAttachmentResponse,
 	JiraErrorResponse,
+	JiraIssue,
 	JiraProject,
 	JiraSearchResponse,
 	JiraStatus,
@@ -63,6 +64,36 @@ export async function queryAssignable(
 
 		const response = await fetch(
 			`${JIRA_URL}/rest/api/3/user/assignable/search?${params.toString()}`,
+			{
+				method: "GET",
+				headers: getAuthHeaders(),
+			},
+		);
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			return {
+				error: errorData || `HTTP error: ${response.status}`,
+			};
+		}
+
+		return await response.json();
+	} catch (error) {
+		return {
+			error: error instanceof Error ? error.message : String(error),
+		};
+	}
+}
+
+/**
+ * Get a Jira ticket
+ */
+export async function getTicket(
+	issueIdOrKey: string,
+): Promise<JiraIssue | JiraErrorResponse> {
+	try {
+		const response = await fetch(
+			`${JIRA_URL}/rest/api/3/issue/${issueIdOrKey}`,
 			{
 				method: "GET",
 				headers: getAuthHeaders(),
