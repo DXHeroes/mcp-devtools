@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.12](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.11...mcp-devtools-v0.3.12) (2025-03-11)
+
+
+### Bug Fixes
+
+* getTicket for Jira uses specific API endpoint for it ([7d29621](https://github.com/DXHeroes/mcp-devtools/commit/7d2962192f3dfb42be6e19811157c71e6a5be76b))
+
 ## [0.3.11](https://github.com/DXHeroes/mcp-devtools/compare/mcp-devtools-v0.3.10...mcp-devtools-v0.3.11) (2025-03-09)
 
 
